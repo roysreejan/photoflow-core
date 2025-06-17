@@ -7,7 +7,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const globalErrorHandler = require("./controllers/errorController");
 const path = require("path");
 const AppError = require("./utils/appError");
-const { mongo } = require("mongoose");
+const userRouter = require("./routes/userRoutes");
 
 const app = express();
 
@@ -34,6 +34,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
 // Routes for users
+app.use("/api/v1/users", userRouter);
 
 //routes for posts
 
