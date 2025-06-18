@@ -138,3 +138,18 @@ exports.followUnfollow = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getMe = catchAsync(async (req, res, next) => {
+  const user = req.user;
+  if (!user) {
+    return next(new AppError("User not Authenticated", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "Authenticated User",
+    data: {
+      user,
+    },
+  });
+});
