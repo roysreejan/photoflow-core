@@ -190,3 +190,17 @@ exports.login = catchAsync(async (req, res, next) => {
 
   createSendToken(user, 200, res, "Login successful.");
 });
+
+exports.logout = catchAsync(async (req, res, next) => {
+  res.cookie("token", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "Lax",
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "Logged out successfully.",
+  });
+});
