@@ -68,3 +68,20 @@ exports.editProfile = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.suggestedUsers = catchAsync(async (req, res, next) => {
+  const loginUserId = req.user.id;
+
+  const users = await User.find({
+    _id: { $ne: loginUserId },
+  }).select(
+    "-password -otp -otpExpires -resetPasswordOTP -resetPasswordOTPExpires -passwordConfirm"
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      users,
+    },
+  });
+});

@@ -10,7 +10,7 @@ const {
   changePassword,
 } = require("../controllers/authController");
 const isAuthenticated = require("../middleware/isAuthenticated");
-const { getProfile, editProfile } = require("../controllers/userController");
+const { getProfile, editProfile, suggestedUsers } = require("../controllers/userController");
 const upload = require("../middleware/multer");
 
 const router = express.Router();
@@ -33,5 +33,6 @@ router.post(
   upload.single("profilePicture"),
   editProfile
 );
+router.get("/suggested-user", isAuthenticated, suggestedUsers);
 
 module.exports = router;
