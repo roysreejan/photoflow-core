@@ -4,6 +4,7 @@ const sharp = require("sharp");
 const { uploadToCloudinary } = require("../utils/cloudinary");
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
+const { path } = require("../app");
 
 exports.createPost = catchAsync(async (req, res, next) => {
   const { caption } = req.body;
@@ -50,6 +51,31 @@ exports.createPost = catchAsync(async (req, res, next) => {
     message: "Post created",
     data: {
       post,
+    },
+  });
+});
+
+exports.getAllPosts = catchAsync(async (req, res, next) => {
+  const posts = await Post.find()
+    .populate({
+      path: "user",
+      select: "username profilePicture bio",
+    })
+    .populate({
+      path: "comments",
+      select: "text user",
+      populate: {
+        path: "user",
+        select: "username profilePicture",
+      },
+    })
+    .sort({ createdAt: -1 });
+
+  return res.status(200).json({
+    status: "success",
+    results: posts.length,
+    data: {
+      posts,
     },
   });
 });
