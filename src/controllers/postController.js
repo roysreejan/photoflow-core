@@ -102,3 +102,40 @@ exports.getUserPosts = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.saveOrUnsavePost = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const postId = req.params.id;
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  const isPostSave = user.savedPosts.includes(postId);
+
+  if (isPostSave) {
+    user.savedPosts.pull(postId);
+    await user.save({ validateBeforeSave: false });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Post unsaved successfully",
+      data: {
+        user,
+      },
+    });
+  } else {
+    user.savedPosts.push(postId);
+    await user.save({ validateBeforeSave: false });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Post saved successfully",
+      data: {
+        user,
+      },
+    });
+  }
+});
