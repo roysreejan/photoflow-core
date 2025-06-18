@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const app = require("./app");
 
@@ -7,9 +8,6 @@ process.on("uncaughtException", (err) => {
   console.error(err.name, err.message);
   process.exit(1);
 });
-
-// Load Environment Variables
-require("dotenv").config();
 
 // Validate required env variables
 if (!process.env.DB || !process.env.PORT) {
