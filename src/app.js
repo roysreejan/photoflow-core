@@ -36,9 +36,15 @@ app.use(mongoSanitize());
 
 // Routes for users
 app.use("/api/v1/users", userRouter);
+//routes for posts
 app.use("/api/v1/posts", postRouter);
 
-//routes for posts
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "Welcome to PhotoFlow API 🚀",
+  });
+});
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
