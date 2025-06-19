@@ -12,7 +12,7 @@ exports.getProfile = catchAsync(async (req, res, next) => {
       "-password -otp -otpExpires -resetPasswordOTP -resetPasswordOTPExpires -passwordConfirm"
     )
     .populate({
-      path: "post",
+      path: "posts",
       options: { sort: { createdAt: -1 } },
     })
     .populate({
@@ -77,7 +77,7 @@ exports.suggestedUsers = catchAsync(async (req, res, next) => {
   }).select(
     "-password -otp -otpExpires -resetPasswordOTP -resetPasswordOTPExpires -passwordConfirm"
   );
-
+  
   res.status(200).json({
     status: "success",
     data: {
