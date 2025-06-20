@@ -9,10 +9,11 @@ cloudinary.config({
 
 const uploadToCloudinary = async (fileUri) => {
   try {
-    const response = await cloudinary.uploader.upload(fileUri.content);
+    const uri = typeof fileUri === "string" ? fileUri : fileUri.content;
+    const response = await cloudinary.uploader.upload(uri);
     return response;
   } catch (error) {
-    console.log(error);
+    console.error("Cloudinary upload error:", error);
     throw new Error("Failed to upload image to Cloudinary");
   }
 };

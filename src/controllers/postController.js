@@ -5,6 +5,7 @@ const { uploadToCloudinary, cloudinary } = require("../utils/cloudinary");
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
 const { path } = require("../app");
+const Comment = require("../models/commentModel");
 
 exports.createPost = catchAsync(async (req, res, next) => {
   const { caption } = req.body;
