@@ -20,7 +20,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://photoflow-console.vercel.app/"],
+    origin: ["http://localhost:3000", "https://photoflow-console.vercel.app"],
     credentials: true,
   })
 );
