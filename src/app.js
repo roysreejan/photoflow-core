@@ -20,7 +20,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://photoflow-console.vercel.app/"],
     credentials: true,
   })
 );
@@ -47,9 +47,9 @@ app.get("/", (req, res) => {
 });
 
 app.all("*", (req, res, next) => {
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-app.use(globalErrorHandler)
+app.use(globalErrorHandler);
 
 module.exports = app;
